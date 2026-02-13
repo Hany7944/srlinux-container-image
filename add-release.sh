@@ -3,13 +3,15 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 # add gh release, this triggers email notifications to the subscribers
-# use `bash add-release.sh 23.10.5`
+# use `bash add-release.sh`
 
 #!/bin/bash
 set -e
 
+source version
+
 # REL is the short release version/tag, i.e. 23.10.5
-REL=$1
+REL=$SRLREL
 
 # cleanup previous notes
 rm -f notes.md

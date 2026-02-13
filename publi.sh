@@ -15,8 +15,11 @@
 #!/bin/bash
 set -e
 
-# REL is the original release version/tag, i.e. 21.11.1-105
-REL=$1
+# source version file to get the version variables
+source version
+
+# REL is the original release version-build, i.e. 21.11.1-105
+REL=$SRLREL-$SRLBUILD
 
 # short version is one without the build tag - 21.11.1
 SHORT_REL=$(echo ${REL} | cut -d "-" -f 1)
@@ -40,14 +43,18 @@ if [[ $CMD != "[/bin/bash]" ]]; then
     exit 1
 fi
 
-# tag
-echo "tagging image"
 
 GHCR_PREFIX="ghcr.io/nokia/srlinux"
 AMD_IMAGE=$ORIG_SRL_AMD64_IMAGE
 AMD_GHCR_IMAGE="${GHCR_PREFIX}:${REL}-amd64"
 ARM_IMAGE=$ORIG_SRL_ARM64_IMAGE
 ARM_GHCR_IMAGE="${GHCR_PREFIX}:${REL}-arm64"
+
+# tag
+echo "tagging image"
+echo "  amd64: $AMD_IMAGE -> $AMD_GHCR_IMAGE"
+echo "  arm64: $ARM_IMAGE -> $ARM_GHCR_IMAGE"
+
 
 # tagging the original per-platform image to the ghcr per platform
 sudo -E docker tag $AMD_IMAGE $AMD_GHCR_IMAGE # amd

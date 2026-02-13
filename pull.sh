@@ -1,6 +1,7 @@
 #!/bin/bash
-SRLREL=24.10.6
-SRLBUILD=209
+
+# read in the image version variables
+source version
 
 # make sure to set the mtu of the mgmt interface to 1500, otherwise
 # artifactory is not happy
