@@ -3,7 +3,8 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 # publish container image to ghcr.io registry and tag with full tag, short tag, major version tag and latest tag
-# usage: `bash publi.sh 21.11.1-105`
+# the version information is read from the ./version file
+# usage: `bash publi.sh`
 # if latest tag shouldn't be added, use: `SRL_LATEST=no bash publi.sh 21.11.1-105`
 # if major version tag shouldn't be added, use: `SRL_MAJOR=no bash publi.sh 21.11.1-105`
 # to just create container images out of the tar.xz archive without pushing them to the registry:
