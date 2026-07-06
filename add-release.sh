@@ -11,7 +11,7 @@ set -e
 source version
 
 # REL is the short release version/tag, i.e. 23.10.5
-REL=$SRLREL
+REL=$SRLREL-$SRLBUILD
 
 # cleanup previous notes
 rm -f notes.md
@@ -25,5 +25,13 @@ fi
 # template the release notes
 sed "s/{{version}}/$REL/g" notes.md.j2 > notes.md
 
+# mark as latest only if SRL_LATEST is not set to `no`
+# e.g. when pushing an older release while a newer one already exists
+if [[ "${SRL_LATEST}" != "no" ]]; then
+    LATEST_FLAG="--latest"
+else
+    LATEST_FLAG="--latest=false"
+fi
+
 # add release
-gh release create ${REL} --notes-file notes.md
+gh release create ${REL} --notes-file notes.md ${LATEST_FLAG}
